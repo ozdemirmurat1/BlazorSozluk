@@ -18,6 +18,9 @@ namespace BlazorSozluk.Infrastructure.Persistence.Extensions
                 });
             });
 
+            // Uygulama ilk kez ayağa kalkarken çalıştırdık. Sonra comment e aldık
+            //var seedData = new SeedData();
+            //seedData.SeedAsync(configuration).GetAwaiter().GetResult();
 
             return services;
         }
