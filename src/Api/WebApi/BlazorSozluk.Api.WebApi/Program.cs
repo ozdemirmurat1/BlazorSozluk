@@ -1,3 +1,4 @@
+using BlazorSozluk.Api.Application.Extensions;
 using BlazorSozluk.Infrastructure.Persistence.Extensions;
 
 namespace BlazorSozluk.Api.WebApi
@@ -15,6 +16,7 @@ namespace BlazorSozluk.Api.WebApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddApplicationRegistration();
             builder.Services.AddInfrastructureRegistration(builder.Configuration);
 
             var app = builder.Build();
