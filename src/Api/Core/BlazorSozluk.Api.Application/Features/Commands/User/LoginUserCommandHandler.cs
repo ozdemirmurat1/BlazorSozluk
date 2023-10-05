@@ -6,6 +6,10 @@ using BlazorSozluk.Common.Models.Queries;
 using BlazorSozluk.Common.Models.RequestModels;
 using MediatR;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace BlazorSozluk.Api.Application.Features.Commands.User
 {
@@ -38,7 +42,32 @@ namespace BlazorSozluk.Api.Application.Features.Commands.User
 
             var result=_mapper.Map<LoginUserViewModel>(dbUser);
 
-            result.Token = "";
+            var claims = new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,dbUser.Id.ToString()),
+                new Claim(ClaimTypes.Email,dbUser.EmailAddress),
+                new Claim(ClaimTypes.Name,dbUser.UserName),
+                new Claim(ClaimTypes.GivenName,dbUser.FirstName),
+                new Claim(ClaimTypes.Surname,dbUser.LastName),
+            };
+
+            result.Token = GenerateToken(claims);
+
+            return result;
+        }
+
+        private string GenerateToken(Claim[] claims)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["AuthConfig:Secret"]));
+            var creds=new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
+            var expiry=DateTime.Now.AddDays(10);
+
+            var token = new JwtSecurityToken(claims: claims,
+                                            expires: expiry,
+                                            signingCredentials: creds,
+                                            notBefore: DateTime.Now);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

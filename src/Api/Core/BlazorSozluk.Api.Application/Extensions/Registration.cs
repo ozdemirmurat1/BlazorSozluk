@@ -10,13 +10,16 @@ namespace BlazorSozluk.Api.Application.Extensions
         {
             var assm=Assembly.GetExecutingAssembly();
 
+            services.AddAutoMapper(assm);
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
             services.AddMediatR(configuration =>
             {
                 configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             });
 
-            services.AddAutoMapper(assm);
-            services.AddValidatorsFromAssembly(assm);
+            
+            
 
             return services;
         }
