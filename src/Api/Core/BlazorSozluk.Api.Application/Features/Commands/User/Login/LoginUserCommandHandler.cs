@@ -11,7 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace BlazorSozluk.Api.Application.Features.Commands.User
+namespace BlazorSozluk.Api.Application.Features.Commands.User.Login
 {
     public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUserViewModel>
     {
@@ -28,7 +28,7 @@ namespace BlazorSozluk.Api.Application.Features.Commands.User
 
         public async Task<LoginUserViewModel> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
-            var dbUser=await _userRepository.GetSingleAsync(i=>i.EmailAddress == request.EmailAddress);
+            var dbUser = await _userRepository.GetSingleAsync(i => i.EmailAddress == request.EmailAddress);
 
             if (dbUser == null)
                 throw new DatabaseValidationException("User not found!");
@@ -40,7 +40,7 @@ namespace BlazorSozluk.Api.Application.Features.Commands.User
             if (!dbUser.EmailConfirmed)
                 throw new DatabaseValidationException("Email address is not confirmed yet!");
 
-            var result=_mapper.Map<LoginUserViewModel>(dbUser);
+            var result = _mapper.Map<LoginUserViewModel>(dbUser);
 
             var claims = new Claim[]
             {
@@ -59,8 +59,8 @@ namespace BlazorSozluk.Api.Application.Features.Commands.User
         private string GenerateToken(Claim[] claims)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["AuthConfig:Secret"]));
-            var creds=new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
-            var expiry=DateTime.Now.AddDays(10);
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expiry = DateTime.Now.AddDays(10);
 
             var token = new JwtSecurityToken(claims: claims,
                                             expires: expiry,

@@ -1,13 +1,13 @@
 ﻿using BlazorSozluk.Common.Models.RequestModels;
 using FluentValidation;
 
-namespace BlazorSozluk.Api.Application.Features.Commands.User
+namespace BlazorSozluk.Api.Application.Features.Commands.User.Login
 {
-    public class LoginUserCommandValidator:AbstractValidator<LoginUserCommand>
+    public class LoginUserCommandValidator : AbstractValidator<LoginUserCommand>
     {
         public LoginUserCommandValidator()
         {
-            RuleFor(i=>i.EmailAddress)
+            RuleFor(i => i.EmailAddress)
                     .NotNull()
                     .EmailAddress(FluentValidation.Validators.EmailValidationMode.AspNetCoreCompatible)
                     .WithMessage("{PropertyName} not a valid email address");

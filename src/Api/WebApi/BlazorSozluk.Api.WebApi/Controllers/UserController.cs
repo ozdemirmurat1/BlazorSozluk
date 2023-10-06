@@ -22,5 +22,21 @@ namespace BlazorSozluk.Api.WebApi.Controllers
             var res=await _mediator.Send(command);
             return Ok(res);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateUserCommand command)
+        {
+            var guid = await _mediator.Send(command);
+            return Ok(guid);
+        }
+
+        [HttpPost]
+        [Route("Update")]
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command)
+        {
+            var guid = await _mediator.Send(command);
+            return Ok(guid);
+        }
+
     }
 }
