@@ -12,6 +12,10 @@
         public const string CreateEntryFavQueueName = "CreateEntryFavQueueName";
         public const string CreateEntryCommentFavQueueName = "CreateEntryCommentFavQueue";
         public const string DeleteEntryFavQueueName = "DeleteEntryFavQueue";
+        public const string CreateEntryCommentVoteQueueName = "CreateEntryCommentVoteQueue";
+        public const string DeleteEntryVoteQueueName = "DeleteEntryVoteQueue";
+        public const string DeleteEntryCommentFavQueueName = "DeleteEntryCommentFavQueue";
+        public const string DeleteEntryCommentVoteQueueName = "DeleteEntryCommentVoteQueue";
 
         public const string CreateEntryVoteQueueName = "CreateEntryVoteQueue";
         public const string VoteExchangeName = "VoteExchange";
