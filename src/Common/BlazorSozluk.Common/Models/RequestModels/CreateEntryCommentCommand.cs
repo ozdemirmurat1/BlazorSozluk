@@ -15,8 +15,8 @@ namespace BlazorSozluk.Common.Models.RequestModels
             
         }
 
-        public Guid EntryId { get; set; }
+        public Guid? EntryId { get; set; }
         public string Content { get; set; }
-        public Guid CreatedById { get; set; }
+        public Guid? CreatedById { get; set; }
     }
 }
