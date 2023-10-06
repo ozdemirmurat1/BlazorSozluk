@@ -8,7 +8,12 @@
         public const string UserExchangeName = "UserExchange";
         public const string UserEmailChangedQueueName = "UserEmailChangedQueue";
 
-        public const string FavExchangeName = "FavExchangeName";
+        public const string FavExchangeName = "FavExchange";
+        public const string CreateEntryFavQueueName = "CreateEntryFavQueueName";
         public const string CreateEntryCommentFavQueueName = "CreateEntryCommentFavQueue";
+        public const string DeleteEntryFavQueueName = "DeleteEntryFavQueue";
+
+        public const string CreateEntryVoteQueueName = "CreateEntryVoteQueue";
+        public const string VoteExchangeName = "VoteExchange";
     }
 }
