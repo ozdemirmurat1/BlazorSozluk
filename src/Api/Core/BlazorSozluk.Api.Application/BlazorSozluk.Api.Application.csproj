@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Commands\EntryComment\Create\" />
-    <Folder Include="Features\Commands\EntryComment\CreateFav\" />
     <Folder Include="Features\Commands\EntryComment\CreateVote\" />
     <Folder Include="Features\Commands\EntryComment\DelteFav\" />
     <Folder Include="Features\Commands\EntryComment\DeleteVote\" />
