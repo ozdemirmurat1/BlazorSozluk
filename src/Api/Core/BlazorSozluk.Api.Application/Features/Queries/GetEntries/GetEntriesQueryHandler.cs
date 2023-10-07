@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using BlazorSozluk.Api.Application.Interfaces.Repositories;
 using BlazorSozluk.Common.Models.Queries;
 using MediatR;
@@ -17,7 +18,7 @@ namespace BlazorSozluk.Api.Application.Features.Queries.GetEntries
             _mapper = mapper;
         }
 
-        public Task<List<GetEntriesViewModel>> Handle(GetEntriesQuery request, CancellationToken cancellationToken)
+        public async Task<List<GetEntriesViewModel>> Handle(GetEntriesQuery request, CancellationToken cancellationToken)
         {
             var query=_entryRepository.AsQueryable();
 
@@ -31,6 +32,8 @@ namespace BlazorSozluk.Api.Application.Features.Queries.GetEntries
             query = query.Include(i => i.EntryComments)
                     .OrderBy(i => Guid.NewGuid())
                     .Take(request.Count);
+
+            return await query.ProjectTo<GetEntriesViewModel>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
         }
     }
 }

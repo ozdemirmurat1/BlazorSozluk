@@ -26,6 +26,11 @@ namespace BlazorSozluk.Infrastructure.Persistence.Extensions
 
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IEmailConfirmationRepository, EmailConfirmationRepository>();
+            services.AddScoped<IEntryCommentRepository, EntryCommentRepository>();
+            services.AddScoped<IEntryRepository, EntryRepository>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
 
             return services;
         }
