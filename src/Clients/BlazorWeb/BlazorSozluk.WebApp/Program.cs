@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using BlazorSozluk.WebApp.Data;
 using BlazorSozluk.WebApp.Infrastructure.Services;
 using BlazorSozluk.WebApp.Infrastructure.Services.Interfaces;
@@ -30,7 +31,13 @@ namespace BlazorSozluk.WebApp
                 return clientFactory.CreateClient("WebApiClient");
             });
 
+            builder.Services.AddTransient<IEntryService,EntryService>();
             builder.Services.AddTransient<IVoteService, VoteService>();
+            builder.Services.AddTransient<IFavService, FavService>();
+            builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<IIdentityService, IdentityService>();
+
+            builder.Services.AddBlazoredLocalStorage();
 
             var app = builder.Build();
 
