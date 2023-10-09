@@ -1,4 +1,6 @@
 using BlazorSozluk.WebApp.Data;
+using BlazorSozluk.WebApp.Infrastructure.Services;
+using BlazorSozluk.WebApp.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -14,6 +16,21 @@ namespace BlazorSozluk.WebApp
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
             builder.Services.AddSingleton<WeatherForecastService>();
+
+            builder.Services.AddHttpClient("WebApiClient", client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:5001");
+
+                // TODO AuthTokenHandler 
+            });
+
+            builder.Services.AddScoped(sp =>
+            {
+                var clientFactory = sp.GetRequiredService<IHttpClientFactory>();
+                return clientFactory.CreateClient("WebApiClient");
+            });
+
+            builder.Services.AddTransient<IVoteService, VoteService>();
 
             var app = builder.Build();
 
