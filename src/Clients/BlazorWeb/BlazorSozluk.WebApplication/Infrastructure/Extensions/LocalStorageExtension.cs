@@ -59,8 +59,8 @@ namespace BlazorSozluk.WebApp.Infrastructure.Extensions
 
             //TODO
 
-            if (string.IsNullOrEmpty(token))
-                token = "";
+            //if (string.IsNullOrEmpty(token))
+            //    token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 
             return token;
         }
@@ -69,8 +69,8 @@ namespace BlazorSozluk.WebApp.Infrastructure.Extensions
         {
             var token=await localStorageService.GetItemAsync<string>(TokenName);
 
-            if (string.IsNullOrEmpty(token))
-                token = "";
+            //if (string.IsNullOrEmpty(token))
+            //    token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 
             return token;
         }

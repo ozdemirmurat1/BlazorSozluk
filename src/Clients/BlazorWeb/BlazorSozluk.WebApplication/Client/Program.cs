@@ -24,14 +24,16 @@ namespace BlazorSozluk.WebApplication
                 client.BaseAddress = new Uri("https://localhost:5001");
 
                 // TODO AuthTokenHandler 
-            });
+            }).AddHttpMessageHandler<AuthTokenHandler>();
 
             builder.Services.AddScoped(sp =>
             {
                 var clientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 return clientFactory.CreateClient("WebApiClient");
+
             });
 
+            builder.Services.AddScoped<AuthTokenHandler>();
             builder.Services.AddTransient<IEntryService, EntryService>();
             builder.Services.AddTransient<IVoteService, VoteService>();
             builder.Services.AddTransient<IFavService, FavService>();

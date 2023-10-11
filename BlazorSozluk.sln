@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSozluk.Projections.Vo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSozluk.Projections.UserService", "src\Projections\BlazorSozluk.Projections.UserService\BlazorSozluk.Projections.UserService.csproj", "{67338F0F-F643-465D-B301-3E9DAFFE7063}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSozluk.WebApplication", "src\Clients\BlazorWeb\BlazorSozluk.WebApplication\BlazorSozluk.WebApplication.csproj", "{21570CDE-33A7-435F-BB95-C3B13F946D5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSozluk.WebApplication", "src\Clients\BlazorWeb\BlazorSozluk.WebApplication\BlazorSozluk.WebApplication.csproj", "{21570CDE-33A7-435F-BB95-C3B13F946D5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

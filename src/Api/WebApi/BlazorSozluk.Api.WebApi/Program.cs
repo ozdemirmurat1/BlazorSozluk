@@ -22,7 +22,8 @@ namespace BlazorSozluk.Api.WebApi
                 {
                     opt.JsonSerializerOptions.PropertyNamingPolicy = null;
                 })
-                .AddFluentValidation(); 
+                .AddFluentValidation()
+                    .ConfigureApiBehaviorOptions(o=>o.SuppressModelStateInvalidFilter=true); 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -32,14 +33,16 @@ namespace BlazorSozluk.Api.WebApi
 
             builder.Services.AddApplicationRegistration();
             builder.Services.AddInfrastructureRegistration(builder.Configuration);
+            //builder.Services.ConfigureAuth(builder.Configuration);
 
             //AddCors
 
             builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
+                builder.AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .SetIsOriginAllowed(origin=>true)
+                       .AllowCredentials();
             }));
 
             var app = builder.Build();
