@@ -1,4 +1,6 @@
-﻿@using BlazorSozluk.WebApplication.Pages.MainPages;
+﻿@using BlazorSozluk.WebApp.Infrastructure.Services.Interfaces;
+@using BlazorSozluk.WebApplication.Pages.MainPages;
+@using Microsoft.AspNetCore.Components.Authorization
 @inherits LayoutComponentBase
 
 <div class="page">
@@ -7,7 +9,7 @@
         <a class="more-data" @onclick="@RefreshEntries">refresh</a>
 
         <ul class="list-group">
-            <EntriesComponent @ref="@entriesComponent" />
+            <EntriesComponent @ref="@_entriesComponent" />
         </ul>
         
     </div>
@@ -23,13 +25,87 @@
     </main>
 </div>
 
+<AuthorizeView>
+    <Authorized>
+        <div class="top-nav">
+            <input type="button" class="form-control btn-success btn-sozluk w-auto" value="Create Entry" @onclick="@NavigateCreateEntryPage" />
+            <input type="button" class="form-control btn-success btn-sozluk w-auto" value="ME" @onclick="@NavigateMEPage" />
+            <input type="button" class="form-control btn-success btn-sozluk w-auto" value="Logout" @onclick="@NavigateLogoutPage" />
+        </div>
+    </Authorized>
+
+    <NotAuthorized>
+        <div class="top-nav">
+            <input type="button" class="form-control btn-success btn-sozluk w-auto" value="Login" @onclick="NavigateLoginPage" />
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+
 @code{
+    private EntriesComponent _entriesComponent;
+    private string searchText;
+    private bool showSearchResult;
+    private List<SearchEntryViewModel> searchResults = new List<SearchEntryViewModel>();
     public string EntriesSubject { get; set; } = "bugün";
 
-    private EntriesComponent entriesComponent;
+    [Inject]
+    NavigationManager navigationManager { get; set; }
+
+    [Inject]
+    IEntryService entryService { get; set; }
 
     private async Task RefreshEntries()
     {
-        await entriesComponent.RefreshList();
+        await _entriesComponent.RefreshList();
+    }
+
+    private void NavigateMEPage()
+    {
+        navigationManager.NavigateTo("/me");
+    }
+
+    private void NavigateLoginPage()
+    {
+        navigationManager.NavigateTo("/login");
+    }
+
+    private void NavigateLogoutPage()
+    {
+        navigationManager.NavigateTo("/logout");
+    }
+    private void NavigateCreateEntryPage()
+    {
+        navigationManager.NavigateTo("/createEntry");
+    }
+
+    private async Task SearchKeyDown(KeyboardEventArgs e)
+    {
+        if(e.Code=="Enter" || e.Code == "NumpadEnter")
+        {
+            await Search();
+        }
+    }
+
+    private async Task OnSearchFocusOut()
+    {
+        await Task.Delay(100);
+        if (showSearchResult)
+            showSearchResult = false;
+    }
+
+    private async Task Search()
+    {
+        if (string.IsNullOrEmpty(searchText))
+            return;
+
+        searchResults = await entryService.SearchBySubject(searchText);
+        showSearchResult = true;
+        searchText = string.Empty;
+    }
+
+    private async Task GoEntry(Guid entryId)
+    {
+        await OnSearchFocusOut();
+        navigationManager.NavigateTo($"/entry/{entryId}");
     }
 }
